@@ -1576,7 +1576,7 @@ void tgl_do_get_local_history (struct tgl_state *TLS, tgl_peer_id_t id, int offs
 
 static void _tgl_do_get_history (struct tgl_state *TLS, struct get_history_extra *E, void (*callback)(struct tgl_state *TLS,void *callback_extra, int success, int size, struct tgl_message *list[]), void *callback_extra) {
   clear_packet ();
-  out_int (0xafa92846);
+  out_int (CODE_messages_get_history);
   out_peer_id (TLS, E->id);
   out_int (0);
   out_int (0);
