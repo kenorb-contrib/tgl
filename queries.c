@@ -3239,9 +3239,12 @@ static void load_next_part (struct tgl_state *TLS, struct download *D, void *cal
     int l;
     if (!D->id) {
       l = tsnprintf (buf, sizeof (buf), "%s/download_%" INT64_PRINTF_MODIFIER "d_%d.jpg", TLS->downloads_directory, D->volume, D->local_id);
-    } 
-    else {      
-        l = tsnprintf (buf, sizeof (buf), "%s/%s" , TLS->downloads_directory, D->name);    
+    } else {
+      if (D->ext) {
+        l = tsnprintf (buf, sizeof (buf), "%s/%s" , TLS->downloads_directory, D->name);
+      } else {
+        l = tsnprintf (buf, sizeof (buf), "%s/download_%" INT64_PRINTF_MODIFIER "d", TLS->downloads_directory, D->id);
+      }
     }
     if (l >= (int) sizeof (buf)) {
       vlogprintf (E_ERROR, "Download filename is too long");
