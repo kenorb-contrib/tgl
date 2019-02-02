@@ -4178,6 +4178,13 @@ void tgl_do_delete_msg (struct tgl_state *TLS, tgl_message_id_t *_msg_id, void (
     }
     return;
   }
+  struct tgl_message *M = tgl_message_get (TLS, id);
+  if (tgl_get_peer_type (M->to_id) == TGL_PEER_ENCR_CHAT) {
+     M->action.type=tgl_message_action_delete_messages;
+     M->flags |=TGLMF_SERVICE;
+     tgl_do_send_msg (TLS, M, 0, 0);
+     return;
+  }
   clear_packet ();
   if (msg_id.peer_type == TGL_PEER_CHANNEL) {
     out_int (CODE_channels_delete_messages);
